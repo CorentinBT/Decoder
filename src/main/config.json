@@ -1,0 +1,20 @@
+{
+  "parameters": {
+    "encoder": {
+      "policy": "KeepSign",
+      "sparsity": 0.20
+    },
+    "matcher": {
+      "policy": "FixedResList",
+      "threshold": 10
+    },
+    "miscellaneous": {
+      "enableChronos": true
+    }
+  },
+  "files": {
+    "databaseFile": "db.npy",
+    "inputVectorFile": "vec.npy",
+    "outputIndexesFile": "indexes.npy"
+  }
+}

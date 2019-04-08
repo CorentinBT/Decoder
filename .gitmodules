@@ -1,0 +1,9 @@
+[submodule "externals/tbb"]
+	path = externals/tbb
+	url = https://github.com/wjakob/tbb
+[submodule "externals/json"]
+	path = externals/json
+	url = https://github.com/nlohmann/json.git
+[submodule "externals/zlib"]
+	path = externals/zlib
+	url = https://github.com/madler/zlib.git
