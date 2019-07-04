@@ -29,18 +29,18 @@ bool NearlyEqual(const double a, const double b) {
 
 Vector<std::size_t> Match(const Vector<f64>& vec, const Matrix<f64>& database, const u64 threshold,
                           Policy policy) {
-    ASSERT_MSG(vec.size() == database.size1(),
-               "vector should have the same number of row that the database");
+    ASSERT_MSG(vec.size() == database.size2(),
+               "vector should have the same number of column that the database");
     if (policy == Policy::FixedThreshold)
         ASSERT_MSG(threshold <= vec.size(), "threshold cannot be higher than the input vector");
 
-    const std::size_t M = database.size1();
-    const std::size_t N = database.size2();
+    const std::size_t N = database.size1();
+    const std::size_t D = database.size2();
 
     Vector<u64> indexes_score(N, 0);
 
     tbb::parallel_for(
-        tbb::blocked_range2d<std::size_t>(0, M, 0, N),
+        tbb::blocked_range2d<std::size_t>(0, D, 0, N),
         [&indexes_score, &database, &vec](const tbb::blocked_range2d<std::size_t>& range) {
             for (std::size_t i = range.rows().begin(); i < range.rows().end(); i++) {
                 const auto curr_elem = vec(i);
@@ -48,7 +48,7 @@ Vector<std::size_t> Match(const Vector<f64>& vec, const Matrix<f64>& database, c
                     continue;
 
                 for (std::size_t j = range.cols().begin(); j < range.cols().end(); j++) {
-                    if (NearlyEqual(database(i, j), curr_elem))
+                    if (NearlyEqual(database(j, i), curr_elem))
                         ++indexes_score(j);
                 }
             }

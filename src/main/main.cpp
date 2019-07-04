@@ -22,11 +22,11 @@ int main(int argc, char* argv[]) {
     t.Start();
     const auto mat = cnpy::npy_load(Settings::values.db_filename);
     const auto shape = mat.shape;
-    const auto M = shape[0];
-    const auto N = shape[1];
+    const auto N = shape[0];
+    const auto D = shape[1];
 
-    Matrix<f64> database(M, N);
-    std::copy(mat.data<f64>(), mat.data<f64>() + M * N, database.data().begin());
+    Matrix<f64> database(N, D);
+    std::copy(mat.data<f64>(), mat.data<f64>() + N * D, database.data().begin());
     t.Stop();
 
     if (Settings::values.enable_chronos)
@@ -35,9 +35,9 @@ int main(int argc, char* argv[]) {
     const auto encoded_database = Encoder::STC::Encode(database, Settings::values.encoder_sparsity,
                                                        Settings::values.encoder_policy);
 
-    Vector<f64> input_vec(M);
+    Vector<f64> input_vec(D);
     const auto vec = cnpy::npy_load(Settings::values.input_vec_filename);
-    std::copy(vec.data<f64>(), vec.data<f64>() + M, input_vec.data().begin());
+    std::copy(vec.data<f64>(), vec.data<f64>() + D, input_vec.data().begin());
 
     const auto encoded_input_vec = Encoder::STC::Encode(
         input_vec, Settings::values.encoder_sparsity, Settings::values.encoder_policy);

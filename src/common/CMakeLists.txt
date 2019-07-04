@@ -1,7 +1,5 @@
 add_library(common STATIC
 	assert.h
-	generator.h
-	generator.cpp
 	common_types.h
 	timer.h
 	timer.cpp
@@ -9,4 +7,4 @@ add_library(common STATIC
 	npy/cnpy.cpp
 )
 
-target_link_libraries(common PUBLIC tbb_static ${ZLIB_LIBRARIES})
+target_link_libraries(common PUBLIC ${ZLIB_LIBRARIES})
