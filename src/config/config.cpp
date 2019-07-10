@@ -17,6 +17,8 @@ Config::Config() : config_loc("config.json") {
 void Config::ReadJSONValues() {
 
     std::ifstream i(config_loc);
+    ASSERT_MSG(i.is_open(), "No 'config.json' file provided");
+
     nlohmann::json j;
     i >> j;
 

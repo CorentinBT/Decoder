@@ -7,4 +7,8 @@ add_library(core STATIC
 	decoder.cpp
 )
 
-target_link_libraries(core PRIVATE common tbb_static)
+if(MVSC)
+	target_link_libraries(core PRIVATE common tbb_static)
+else()
+	target_link_libraries(core PRIVATE common tbb)
+endif()
