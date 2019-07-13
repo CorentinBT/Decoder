@@ -59,9 +59,10 @@ Vector<std::size_t> Match(const Vector<f64>& vec, const Matrix<f64>& database, c
         Vector<std::size_t> idx(N);
         std::iota(idx.begin(), idx.end(), 0);
 
-        tbb::parallel_sort(idx.begin(), idx.end(), [&indexes_score](const u64 i1, const u64 i2) {
-            return indexes_score[i1] > indexes_score[i2];
-        });
+        std::partial_sort(idx.begin(), idx.begin() + threshold, idx.end(),
+                          [&indexes_score](const u64 i1, const u64 i2) {
+                              return indexes_score[i1] > indexes_score[i2];
+                          });
 
         return boost::numeric::ublas::subrange(idx, 0, threshold);
     } else if (policy == Policy::FixedThreshold) {
